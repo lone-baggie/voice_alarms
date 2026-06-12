@@ -51,6 +51,20 @@ This sensor turns **ON** when an alarm triggers.
 * **State:** Count of active alarms.
 * **Attributes:** A detailed list of all active alarms by name and time.
 
+
+
+## ⚠️ Important: Potential Entity ID Conflicts
+
+This integration dynamically creates and manages switch entities using the entity IDs `switch.1` through `switch.99`.
+
+**Before installing this integration:**
+
+- Please check your existing devices in **Settings > Devices & Services > Entities**.
+
+- If you have any existing switches currently named `switch.1` through `switch.99`, **you must rename them** to something else.
+
+- Failure to do so will result in conflicts, as this integration will attempt to take control of those existing entity IDs.
+
 ## Setup Instructions
 
 ### 1. Installation
@@ -102,7 +116,3 @@ You can obtain the device ID from the alarm switch attributes.
 * **Alarm list:**  Only active alarm switches will be listed in the intent 'List Alarms' .   Actions 'voice_alarms.list_alarms' will list all alarm switches regardless of state.
 * **Deleting  Alarms:** 'Delete alarm' and 'delete all alarms' action or intent  will delete  alarm switches  regardless of state.
 * **Reboot Recovery:** If Home Assistant is rebooted, all alarm switches will be reset to **ON** (active).
-
-
-
- 
