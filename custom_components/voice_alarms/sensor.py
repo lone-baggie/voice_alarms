@@ -1,9 +1,9 @@
 """Sensor platform providing detailed list indexes for alarms."""
-from homeassistant.components.sensor import SensorEntity
-from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant
-from homeassistant.helpers.entity import DeviceInfo
-from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.components.sensor import SensorEntity # pyright: ignore[reportMissingImports]
+from homeassistant.config_entries import ConfigEntry   # pyright: ignore[reportMissingImports] 
+from homeassistant.core import HomeAssistant # pyright: ignore[reportMissingImports]
+from homeassistant.helpers.entity import DeviceInfo     # pyright: ignore[reportMissingImports]
+from homeassistant.helpers.entity_platform import AddEntitiesCallback # pyright: ignore[reportMissingImports] # pyright: ignore[reportMissingImports]
 from .const import DOMAIN
 
 async def async_setup_entry(

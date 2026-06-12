@@ -1,9 +1,9 @@
 import logging
 from datetime import datetime
-import voluptuous as vol
+import voluptuous as vol  # pyright: ignore[reportMissingImports]   
 
-from homeassistant.core import HomeAssistant, ServiceCall, ServiceResponse, SupportsResponse
-from homeassistant.helpers import config_validation as cv
+from homeassistant.core import HomeAssistant, ServiceCall, ServiceResponse, SupportsResponse # pyright: ignore[reportMissingImports]
+from homeassistant.helpers import config_validation as cv # pyright: ignore[reportMissingImports]
 from .helpers import async_cancel_alarm_logic
 from .const import DOMAIN
 from .switch import async_register_new_switch

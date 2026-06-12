@@ -1,11 +1,11 @@
 """Binary sensor platform for the custom alarm master status."""
 import logging
-from homeassistant.components.binary_sensor import BinarySensorEntity, BinarySensorDeviceClass
-from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant
-from homeassistant.helpers.entity import DeviceInfo
-from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from homeassistant.helpers import entity_registry as er
+from homeassistant.components.binary_sensor import BinarySensorEntity, BinarySensorDeviceClass # pyright: ignore[reportMissingImports]
+from homeassistant.config_entries import ConfigEntry # pyright: ignore[reportMissingImports]
+from homeassistant.core import HomeAssistant # pyright: ignore[reportMissingImports]
+from homeassistant.helpers.entity import DeviceInfo # pyright: ignore[reportMissingImports]
+from homeassistant.helpers.entity_platform import AddEntitiesCallback # pyright: ignore[reportMissingImports] # pyright: ignore[reportMissingImports]
+from homeassistant.helpers import entity_registry as er # pyright: ignore[reportMissingImports]
 from .const import DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
@@ -53,7 +53,7 @@ class AlarmMasterBinarySensor(BinarySensorEntity):
         """Return True if an alarm is ringing."""
         return self._state
 
-# Change 'def' to 'async def'
+
     async def async_update_state(self) -> None:
         """Logic to calculate if any alarm is ringing and update the sensor."""
         if DOMAIN not in self.hass.data:

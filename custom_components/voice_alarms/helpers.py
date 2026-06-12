@@ -1,5 +1,5 @@
 """Helper functions for Voice Alarm."""
-from homeassistant.core import HomeAssistant
+from homeassistant.core import HomeAssistant # pyright: ignore[reportMissingImports]
 from .const import DOMAIN
 
 async def async_cancel_alarm_logic(hass: HomeAssistant):

@@ -1,9 +1,9 @@
 """Intent handlers for the Alarm and Reminders application workflow."""
 import logging
-import voluptuous as vol
+import voluptuous as vol # pyright: ignore[reportMissingImports]   
 
-from homeassistant.core import HomeAssistant
-from homeassistant.helpers import intent, config_validation as cv
+from homeassistant.core import HomeAssistant # pyright: ignore[reportMissingImports]
+from homeassistant.helpers import intent, config_validation as cv # pyright: ignore[reportMissingImports]
 from .helpers import async_cancel_alarm_logic
 from .const import DOMAIN
 from .switch import async_register_new_switch

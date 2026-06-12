@@ -5,10 +5,10 @@ import os
 import json
 from datetime import datetime
 
-from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant
-from homeassistant.helpers import discovery
-import homeassistant.util.dt as dt_util
+from homeassistant.config_entries import ConfigEntry # pyright: ignore[reportMissingImports]
+from homeassistant.core import HomeAssistant # pyright: ignore[reportMissingImports]
+from homeassistant.helpers import discovery # pyright: ignore[reportMissingImports]
+import homeassistant.util.dt as dt_util # pyright: ignore[reportMissingImports]
 
 from .intents import async_setup_intents
 from .services import async_setup_services

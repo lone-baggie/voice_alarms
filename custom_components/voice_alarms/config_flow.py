@@ -1,9 +1,9 @@
 """Config flow for Voice Alarms."""
 from __future__ import annotations
 
-import voluptuous as vol
-from homeassistant import config_entries
-from homeassistant.data_entry_flow import FlowResult
+import voluptuous as vol # pyright: ignore[reportMissingImports]
+from homeassistant import config_entries # pyright: ignore[reportMissingImports]
+from homeassistant.data_entry_flow import FlowResult # pyright: ignore[reportMissingImports]
 
 from .const import DOMAIN
 

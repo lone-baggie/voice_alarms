@@ -1,11 +1,11 @@
 """Switch entity platform mapping for the custom alarm entries."""
 import logging
-from homeassistant.components.switch import SwitchEntity
-from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant
-from homeassistant.helpers.entity import DeviceInfo
-from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from homeassistant.helpers import entity_registry as er
+from homeassistant.components.switch import SwitchEntity # pyright: ignore[reportMissingImports]
+from homeassistant.config_entries import ConfigEntry  # pyright: ignore[reportMissingImports]  
+from homeassistant.core import HomeAssistant  # pyright: ignore[reportMissingImports]  
+from homeassistant.helpers.entity import DeviceInfo    # pyright: ignore[reportMissingImports]
+from homeassistant.helpers.entity_platform import AddEntitiesCallback # pyright: ignore[reportMissingImports] # pyright: ignore[reportMissingImports]
+from homeassistant.helpers import entity_registry as er # pyright: ignore[reportMissingImports]
 from .const import DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
