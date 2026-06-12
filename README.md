@@ -51,20 +51,6 @@ This sensor turns **ON** when an alarm triggers.
 * **State:** Count of active alarms.
 * **Attributes:** A detailed list of all active alarms by name and time.
 
-
-
-## ⚠️ Important: Potential Entity ID Conflicts
-
-This integration dynamically creates and manages switch entities using the entity IDs `switch.1` through `switch.99`.
-
-**Before installing this integration:**
-
-- Please check your existing devices in **Settings > Devices & Services > Entities**.
-
-- If you have any existing switches currently named `switch.1` through `switch.99`, **you must rename them** to something else.
-
-- Failure to do so will result in conflicts, as this integration will attempt to take control of those existing entity IDs.
-
 ## Setup Instructions
 
 ### 1. Installation
