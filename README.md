@@ -28,9 +28,12 @@ Based on the [HA-Alarms-and-Reminders](https://github.com/omaramin-2000/HA-Alarm
 **Available Actions:** 
 
 * `voice_alarms.create_alarm`
+* `voice_alarms.alarm_on_off`
 * `voice_alarms.delete_alarm`
 * `voice_alarms.delete_all_alarms`
 * `voice_alarms.cancel_alarm`
+
+
 
 ## Entity Details
 
@@ -101,4 +104,5 @@ You can obtain the device ID from the alarm switch attributes.
 * **Alarm Behavior:** When created, alarm switches are turned **ON** (active). Turning a switch off disables the alarm.  One-off alarm switches that have been turned off will not be deleted, until turned back on and triggered.
 * **Alarm list:**  Only active alarm switches will be listed in the intent 'List Alarms' .   Actions 'voice_alarms.list_alarms' will list all alarm switches regardless of state.
 * **Deleting  Alarms:** 'Delete alarm' and 'delete all alarms' action or intent  will delete  alarm switches  regardless of state.
+* **Changing Alarm state:**  Use the the action voice_alarms_on_off in your automations to change alarm state as you cannot guarantee the switch ID name.
 * **Reboot Recovery:** If Home Assistant is rebooted, all alarm switches will be reset to **ON** (active).
