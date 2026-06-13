@@ -88,65 +88,59 @@ class CreateAlarmHandler(intent.IntentHandler):
         }, extra=vol.ALLOW_EXTRA)
 
     async def async_handle(self, user_intent: intent.Intent) -> intent.IntentResponse:
+        """Handle the create alarm intent."""
         hass = user_intent.hass
         slots = user_intent.slots
         db = hass.data[DOMAIN]["alarms"]
         calling_device = user_intent.device_id or ""
 
-        # Parse Time
+        # 1. Parsing Input
         raw_time_str = str(slots.get("time", {}).get("value", "")).lower().strip()
         for word in ["every", "at", "for"]:
             raw_time_str = raw_time_str.replace(word, "").strip()
         
-        # Parse Name and Reoccurrence
-        raw_name = slots.get("alarm_name", {}).get("value") or slots.get("name", {}).get("value") or slots.get("custom_alarm_name", {}).get("value")
         reoccurring = slots.get("reoccurring", {}).get("value", "once").lower().strip()
+        raw_name = slots.get("alarm_name", {}).get("value") or slots.get("name", {}).get("value") or slots.get("custom_alarm_name", {}).get("value")
+
         parsed_time = None
         for fmt in ("%H:%M:%S", "%H:%M", "%I:%M %p", "%I %p", "%I:%M%p", "%I%p", "%H"):
             try:
                 parsed_time = datetime.strptime(raw_time_str, fmt).time()
                 break
-            except ValueError: continue
+            except ValueError:
+                continue
 
         if not parsed_time:
             response = user_intent.create_response()
-            response.async_set_speech(f"Sorry, I couldn't understand the time format.")
+            response.async_set_speech("Sorry, I couldn't understand the time format.")
             return response
 
         raw_time = parsed_time.strftime("%H:%M")
-        
-        # Logic: Check for Conflicts/Upgrades
-        for idx, alarm in db.items():
-            if raw_name and alarm.get("name", "").lower() == raw_name.lower():
-                response = user_intent.create_response()
-                response.async_set_speech(f"An alarm named {raw_name} already exists.")
-                return response
-            
+        new_score = PRIORITY.get(reoccurring, 1)
+
+        # 2. Duplicate and Conflict Validation Logic
+        for idx, alarm in list(db.items()):
             if alarm.get("time") == raw_time:
-                existing_re = alarm.get("reoccurring", "once").lower()
+                existing_re = alarm.get("reoccurring", "once").lower().strip()
                 existing_score = PRIORITY.get(existing_re, 1)
-                new_score = PRIORITY.get(reoccurring, 1)
 
-                if new_score == existing_score:
+                if new_score < existing_score:
                     response = user_intent.create_response()
-                    response.async_set_speech(f"An alarm is already set for {raw_time} with the same schedule.")
-                    return response
-                elif new_score > existing_score:
-                    alarm["reoccurring"] = reoccurring
-                    alarm["persistent"] = True
-                    if idx in hass.data[DOMAIN]["switches"]:
-                        hass.data[DOMAIN]["switches"][idx].async_write_ha_state()
-                    from . import save_alarms_to_disk
-                    await hass.async_add_executor_job(save_alarms_to_disk, hass)
-                    response = user_intent.create_response()
-                    response.async_set_speech(f"Upgraded your {raw_time} alarm to {reoccurring}.")
-                    return response
-                else:
-                    response = user_intent.create_response()
-                    response.async_set_speech(f"A higher priority alarm already exists at {raw_time}.")
+                    response.async_set_speech(f"Cannot create: Lower priority than existing alarm at {raw_time}.")
                     return response
 
-        # Standard Creation
+                if new_score == existing_score and new_score != 2:
+                    response = user_intent.create_response()
+                    response.async_set_speech(f"Cannot create: Duplicate alarm at {raw_time}.")
+                    return response
+
+                if new_score == 2 and existing_score == 2:
+                    if existing_re == reoccurring:
+                        response = user_intent.create_response()
+                        response.async_set_speech(f"Cannot create: {reoccurring} alarm already exists at {raw_time}.")
+                        return response
+
+        # 3. Standard Creation
         allocated_idx = next((str(i) for i in range(1, 100) if str(i) not in db), None)
         if not allocated_idx:
             response = user_intent.create_response()
@@ -163,6 +157,23 @@ class CreateAlarmHandler(intent.IntentHandler):
             "enabled": True
         }
         
+        # 4. Post-Creation Cleanup Logic
+        # Delete existing alarms based on the new alarm's priority level
+        same_time_alarms = [(idx, alarm) for idx, alarm in db.items() 
+                            if alarm.get("time") == raw_time and idx != allocated_idx]
+
+        for idx, alarm in same_time_alarms:
+            existing_re = alarm.get("reoccurring", "once").lower().strip()
+            existing_score = PRIORITY.get(existing_re, 1)
+
+            if new_score == 4:
+                await self._delete_alarm(hass, idx)
+            elif new_score == 3 and existing_score <= 2:
+                await self._delete_alarm(hass, idx)
+            elif new_score == 2 and existing_score == 1:
+                await self._delete_alarm(hass, idx)
+
+        # Save and register
         from . import save_alarms_to_disk
         await hass.async_add_executor_job(save_alarms_to_disk, hass)
         await async_register_new_switch(hass, allocated_idx)
@@ -173,6 +184,12 @@ class CreateAlarmHandler(intent.IntentHandler):
         response = user_intent.create_response()
         response.async_set_speech(f"Alarm created for {raw_time} ({reoccurring}).")
         return response
+
+    async def _delete_alarm(self, hass, idx):
+        """Helper to remove alarm from DB and HA switches."""
+        if idx in hass.data[DOMAIN]["switches"]:
+            await hass.data[DOMAIN]["switches"][idx].async_remove()
+        del hass.data[DOMAIN]["alarms"][idx]
 
 class CancelAlarmHandler(intent.IntentHandler):
     def __init__(self):
