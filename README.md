@@ -33,8 +33,6 @@ Based on the [HA-Alarms-and-Reminders](https://github.com/omaramin-2000/HA-Alarm
 * `voice_alarms.delete_all_alarms`
 * `voice_alarms.cancel_alarm`
 
-
-
 **Examples**
 
 create alarm at ten thirty am 
@@ -47,26 +45,26 @@ delete alarm dinner
 
 delete alarm at 10 pm 
 
-
-
 ## Entity Details
 
 ### Switches (switch.1 - switch.99)
 
 Each alarm is represented as a switch. Turning it **OFF** disables it; turning it **ON** enables it.
 
-* **Attributes:** `state`, `alarm_id`, `device_id`, `name`, `time`, `persistent`, `target day reoccurring`, `ringing`.
+* **State:** On/Off
+* **Attributes:** `alarm_id`, `device_id`, `name`, `time`, `persistent`, `target day reoccurring`, `ringing`.
 
 ### Binary Sensor (binary_sensor.active_alarm)
 
 This sensor turns **ON** when an alarm triggers.
 
-- **Attributes:** `state, device_id,alarm_ID,name,media player`
+- **State**: Clear / Detected
+- **Attributes:** `device_id,alarm_ID,name,media player`
 
 ### Sensor (sensor.list_alarms)
 
 * **State:** Count of active alarms.
-* **Attributes:** A detailed list of all active alarms by name and time.
+* **Attributes:**  `alarm_id, Friendly name, time,Reoccurring,persistant`
 
 ## Setup Instructions
 
@@ -81,7 +79,7 @@ Install via **HACS** as a "Custom Repository" (`https://github.com/lone-baggie/v
 This integration requires a custom intent file to process your speech:
 
 1. Navigate to `/config/custom_sentences/en/` (create the directory if it doesn't exist).
-2. Save the [voice-alarms.yaml](https://github.com/lone-baggie/voice_alarms/blob/main/assets/alarms.yaml) file into this folder.
+2. Save the [alarm.yaml](https://github.com/lone-baggie/voice_alarms/blob/main/assets/alarm.yaml) file into this folder.
 3. Reload your voice intents in Home Assistant.
 
 > **Warning:** Intent syntax is sensitive. Any accidental space or character change may break functionality.
