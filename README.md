@@ -46,13 +46,11 @@ This integration allows you to create, delete, and list alarms using simple voic
 * `delete alarm at six thirty pm `
 * `delete all alarms`
 
-
-
 ## Setup Instructions
 
 ### 1. Installation
 
-[](https://my.home-assistant.io/redirect/hacs_repository/?owner=lone-baggie&repository=voice_alarms&category=integration)
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=lone-baggie&repository=https://github.com/lone-baggie/voice_alarms&category=integration)
 
 Install via **HACS** as a "Custom Repository" (`https://github.com/lone-baggie/voice_alarms`), or manually copy the `custom_components/voice_alarms` directory into your `/config/custom_components/` directory and restart.
 
@@ -66,8 +64,6 @@ This integration requires a custom intent file to process your speech:
 
 > **Warning:** Intent syntax is sensitive. Any accidental space or character change may break functionality.
 
-
-
 ## Entity details
 
 ### Switches (switch.1 - switch.99)
@@ -79,23 +75,25 @@ Each alarm is represented as a switch. Turning it **OFF** disables it; turning i
 
 ### Binary Sensor (binary_sensor.active_alarm)
 
-This sensor is **true** when an alarm triggers.
+This sensor is **true** when an alarm is ringing.
 
 - **State**: `Clear / Detected`
 - **Attributes:** `device_id,alarm_ID,name,media player`
 
 ### Sensor (sensor.list_alarms)
 
+shows all created alarms
+
 * **State:** `Count of active alarms`
 * **Attributes:**  `alarm_id, Friendly name, time,Reoccurring,persistant` 
 
 ## Automations & Sirens
 
-This integration does not contain built-in sounds. Use the `binary_sensor.active_alarm` to trigger your preferred response.
+This integration does not contain any built-in sounds . Use the `binary_sensor.active_alarm` to trigger your preferred response via automations  (see example).
 
 ### Example: ESPHome Alarm Trigger
 
-If using an ESPHome device (M5Stack Atom Echo or HA Voice preview ), you can expose a local "alarm switch" via a [package](https://github.com/lone-baggie/voice_alarms/blob/main/assets/add_switch.yaml) .  This will expose the internal siren used for timers as a home assistant switch.
+If using an ESPHome voice satellite device (M5Stack Atom Echo, HA Voice preview ), you can expose an internal  "alarm switch" via a [package](https://github.com/lone-baggie/voice_alarms/blob/main/assets/add_switch.yaml) .  This will expose the internal siren used for timers as a home assistant switch.
 
     packages:
       add_switch: !include packages/add_switch.yaml
