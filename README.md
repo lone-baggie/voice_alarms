@@ -50,7 +50,7 @@ This integration allows you to create, delete, and list alarms using simple voic
 
 ### 1. Installation
 
-[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=lone-baggie&repository=https://github.com/lone-baggie/voice_alarms&category=integration)
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=lone-baggie&repository=voice_alarms&category=integration)
 
 Install via **HACS** as a "Custom Repository" (`https://github.com/lone-baggie/voice_alarms`), or manually copy the `custom_components/voice_alarms` directory into your `/config/custom_components/` directory and restart.
 
