@@ -111,7 +111,7 @@ Here is an example automation.
         target:
           entity_id: switch.YOUR_ALARM_SWITCH_NAME
 
-You can obtain the device ID from the **settings**-**device & services**-**esphome**-**device** (device id will be shown in the webpage url) .
+You can obtain the device ID from the settings **-** device & services **-** esphome **-** device name (device id will be shown in the webpage url) .
 
 ## Notes
 
