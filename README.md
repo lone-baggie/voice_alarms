@@ -128,3 +128,14 @@ You can obtain the device ID from the settings **-** device & services **-** esp
 
 Based on [HA-Alarms-and-Reminders](https://github.com/omaramin-2000/HA-Alarms-and-Reminders) by  [omaramin-2000](https://github.com/omaramin-2000) and [HA-Alarm-Clock](https://github.com/nirnachmani/HA-Alarm-Clock/tree/main) by [nirnachmani](https://github.com/nirnachmani)  (thank you both)
 
+## 📄 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+
+## ☕ Support
+
+If you find this integration useful and want to support my work, feel free to buy me a coffee!
+
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Donate-yellow.svg?style=for-the-badge&logo=buy-me-a-coffee)](https://buymeacoffee.com/lonebaggie)
